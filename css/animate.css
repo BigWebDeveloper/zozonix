@@ -1,0 +1,264 @@
+.img {
+	display:flex;
+    justify-content:center;
+  	align-items:center;
+    width: 40%;
+    height: 60%;
+    position: absolute;
+    top: 25%;
+	right: 1%;
+    transform: translateY(-10%);
+    transform: translateX(-26%);
+    z-index: 1;
+}
+
+.image-slide{
+	float: left;
+}
+
+.img ul {
+  width:70vmin;
+  height:70vmin;
+  position:relative;
+}
+
+.img li { 
+  /*
+    |a|d|a|
+    -------  -           
+    |/   \|  | 0.5h
+    |\   /|  ^          
+    ------- 
+    |  w  |
+  
+    a = 0.5h/tan60 = 0.28867513459h
+    d = 0.5h/sin60 = 0.57735026919h
+    w = a + d + a  = 1.15470053838h
+  
+    [zoom out]
+  
+        |a|_d_|         _____    _
+        /|     \       /     \   |
+  ang=60_|      \__d__/       \  | h     
+       \        /     \       /  |
+        \_____|/|      \_____/  _|
+              a     
+       |--------|
+           w
+  */
+  --h: calc(100% / 3);
+  --w: calc(1.15470053838 * var(--h));
+  --a: calc(0.28867513459 * var(--h));
+  --d: calc(0.57735026919 * var(--h));
+  height:var(--h);
+  width:var(--w);
+  position:absolute;
+  list-style: none;
+}
+
+.img img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  /* 
+  
+   [clip-path coordinates]
+  
+    --A-F--
+   B|/   \|E    coord.
+    |\   /|       A(a/w, 0)
+    --C-D--       B(0, 50%)
+                  C(a/w, 100%)
+                  D(100% - a/w, 100%)
+                  E(100%, 50%)
+                  F(100% - a/w, 0)
+                where a/w = 0.24999999999
+  */
+  --aw:24.99999999999%;
+  clip-path:polygon(
+    var(--aw) 0,
+    0 50%,
+    var(--aw) 100%,
+    calc(100% - var(--aw)) 100%,
+    100% 50%,
+    calc(100% - var(--aw)) 0
+  );
+}
+
+.img li:nth-of-type(1) {
+  left:calc(50% - var(--a) - var(--d) * 0.5);
+  top:0;
+}
+.img li:nth-of-type(2) {
+  left:calc(50% - var(--a) * 2 - var(--d) * 1.5);
+  top:calc(var(--h) * 0.5);
+}
+.img li:nth-of-type(3) {
+  left:calc(50% - var(--a) * 2 - var(--d) * 1.5);
+  top:calc(var(--h) * 1.5);
+}
+.img li:nth-of-type(4) {
+  left:calc(50% - var(--a) - var(--d) * 0.5);
+  top:calc(var(--h) * 2);
+}
+.img li:nth-of-type(5) {
+  left:calc(50% + var(--d) * 0.5);
+  top:calc(var(--h) * 0.5);
+}
+.img li:nth-of-type(6) {
+  left:calc(50% + var(--d) * 0.5);
+  top:calc(var(--h) * 1.5);
+}
+
+
+
+/* 
+style 
+*/
+
+.img ul {
+  filter:drop-shadow(0 0 10px hsla(0,0%,0%,0.3));
+}
+
+.img li:hover {
+  filter:drop-shadow(0 0 10px lightblue);
+  color: red;
+}
+
+/*
+anim
+*/
+
+.img ul {
+  animation:r 4s forwards;
+	
+} @keyframes r {
+ 0%{
+	  transform:rotate(180deg) scale(0.2,0.2);
+	  filter:grayscale(0.9);
+	  opacity: 0;
+	}
+	
+	 30%{;
+	  filter:grayscale(0.9);
+	}
+	
+70%{;
+	  filter:grayscale(0);
+	}
+100% {transform:rotate(0);
+	filter:grayscale(0);
+	opacity: 1;
+}
+}
+
+.img li {
+  animation:ir 4s forwards;
+	
+} @keyframes ir {
+ 0%{transform:rotate(-360deg);
+
+}
+  100% {transform:rotate(0);
+}
+}
+
+
+
+
+
+/*
+animate 2
+*/
+
+.slide1{
+    animation: slide1 1s ease-out;
+}
+
+.slide2{
+animation: slide2 1s ease-out 0.3s;
+}
+
+.slide3{
+animation: slide3 1s ease-out 0.4s;
+}
+
+.slide4{
+animation: slide4 1s ease-out 0.5s;
+}
+
+@keyframes slide1 {
+  0%{top:0;
+	filter:grayscale(0.9);
+	opacity: 0;
+	}
+  35%{}
+  75%{}
+  100%{top:47%;
+	filter:grayscale(0);
+	opacity: 1}
+}
+
+@keyframes slide2 {
+  0%{top:0;
+	filter:grayscale(0.9);
+	opacity: 0;}
+  35%{}
+  75%{}
+  100%{top:62%;
+	filter:grayscale(0);
+	opacity: 1}
+}
+
+@keyframes slide3 {
+  0%{top:0;
+	filter:grayscale(0.9);
+	opacity: 0;}
+  35%{}
+  75%{}
+  100%{top:52%;
+	filter:grayscale(0);
+	opacity: 1}
+}
+
+@keyframes slide4 {
+  0%{top:0;
+	filter:grayscale(0.9);
+	opacity: 0;}
+  35%{}
+  75%{}
+  100%{top:50%;
+	filter:grayscale(0);
+	opacity: 1}
+	
+}
+
+
+.slide1:hover .slide-article ,.slide2:hover .slide-article ,.slide3:hover .slide-article , .slide4:hover .slide-article  {
+  height: 100%;
+}
+
+.slide1:hover .flyer-2 , .slide2:hover .flyer-2 , .slide3:hover .flyer-2 , .slide4:hover .flyer-2  {
+	transition: filter 1s ease-out; 
+	filter:opacity(0);
+}
+
+.slide1:hover .flyer-1 , .slide2:hover .flyer-1 , .slide3:hover .flyer-1 , .slide4:hover .flyer-1{
+	transition: filter 1s ease-out; 
+	filter:blur(1px);
+}
+
+.main-img img:nth-child(2){
+	animation: imgslide 8s ease-out infinite;
+	animation-fill-mode: forwards;
+}
+@keyframes imgslide{
+	 0%{
+	}
+     35%{ opacity: 0 }
+     75%{ }
+     100%{
+	;
+	}
+}
